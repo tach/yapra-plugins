@@ -23,8 +23,8 @@ end
 require 'twitter'
 require 'kconv'
 
-module Yapra::Plugin::Publish < Yapra::Plugin::Base
-	class Twitter
+module Yapra::Plugin::Publish
+	class Twitter < Yapra::Plugin::Base
 		def run(data)
 			prefix = config['prefix'] || ''
 			c = Twitter::Client.new(:login=>config["login"], :password=>config["password"])
