@@ -23,7 +23,7 @@ end
 require 'twitter'
 require 'kconv'
 
-module Yapra::Plugin::Publish
+module Yapra::Plugin::Publish < Yapra::Plugin::Base
 	class Twitter
 		def run(data)
 			prefix = config['prefix'] || ''
