@@ -27,7 +27,7 @@ module Yapra::Plugin::Publish
 	class Twitter < Yapra::Plugin::Base
 		def run(data)
 			prefix = config['prefix'] || ''
-			c = Twitter::Client.new(:login=>config["login"], :password=>config["password"])
+			c = ::Twitter::Client.new(:login=>config["login"], :password=>config["password"])
 
 			posts = c.timeline_for(:me,:count=>config["check"])
 			posted_entries = posts.map do |post| post.text.gsub!(/ http.+$/, '') end
