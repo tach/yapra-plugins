@@ -27,6 +27,18 @@ module Yapra::Plugin::Publish
 	class Twitter < Yapra::Plugin::Base
 		def run(data)
 			prefix = config['prefix'] || ''
+
+			hashtags = ''
+			case config['hashtags'].class.to_s
+			when 'String'
+				hashtags = ' ' + config['hashtags']
+			when 'Array'
+				config['hashtags'].each do |s|
+					s.match(/^#/) or s = '#' + s
+					hashtags += ' ' + s
+				end
+			end
+
 			c = ::Twitter::Client.new(:login=>config["login"], :password=>config["password"])
 
 			posts = c.timeline_for(:me,:count=>config["check"])
@@ -39,6 +51,7 @@ module Yapra::Plugin::Publish
 				next if posted_entries.include? title
 
 				comment = [prefix, title, link].join(' ')
+				comment += hashtags
 				s = c.status(:post, comment)
 			end
 
