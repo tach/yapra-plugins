@@ -42,7 +42,7 @@ module Yapra::Plugin::Publish
 			c = ::Twitter::Client.new(:login=>config["login"], :password=>config["password"])
 
 			posts = c.timeline_for(:me,:count=>config["check"])
-			posted_entries = posts.map do |post| post.text.gsub!(/ http.+$/, '') end
+			posted_entries = posts.map do |post| post.text.gsub!(/ http.+\z/m, '') end
 
 			data.reverse.each do |item|
 				link  = item.link
