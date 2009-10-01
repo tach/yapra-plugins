@@ -43,6 +43,7 @@ module Yapra::Plugin::Publish
 
 			posts = c.timeline_for(:me,:count=>config["check"])
 			posted_entries = posts.map do |post| post.text.gsub!(/ http.+\z/m, '') end
+			posted_entries or return data
 
 			data.reverse.each do |item|
 				link  = item.link
