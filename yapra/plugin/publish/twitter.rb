@@ -39,7 +39,16 @@ module Yapra::Plugin::Publish
 				end
 			end
 
-			c = ::Twitter::Client.new(:login=>config["login"], :password=>config["password"])
+			c = ::Twitter::Client.new(
+				:oauth_access => {
+					'key' => config['access_key'],
+					'secret' => config['access_secret'],
+				},
+				:oauth_consumer => {
+					'key' => config['consumer_key'],
+					'secret' => config['consumer_secret'],
+				}
+			)
 
 			posts = c.timeline_for(:me,:count=>config["check"])
 			posted_entries = posts.map do |post| post.text.gsub!(/ http.+\z/m, '') end
